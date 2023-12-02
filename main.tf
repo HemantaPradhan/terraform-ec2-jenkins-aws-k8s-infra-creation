@@ -117,12 +117,14 @@ EOF
 }
 
 resource "aws_instance" "web" {
-  ami             = data.aws_ami.amazon_linux.id
-  instance_type   = "t2.xlarge" 
-  key_name        = var.key_name
-  iam_instance_profile = "${aws_iam_instance_profile.test_profile.name}"
-  security_groups = [aws_security_group.jenkins_sg.name]
+  ami           = "ami-0230bd60aa48260c6"  # Replace with the desired AMI ID from EC2 launch
+  instance_type = "t2.micro"  # Set your desired instance type
+  key_name      = var.key_name  # Replace with your key pair name
+
+  vpc_security_group_ids = ["xxxx"]  # Replace with your security group ID
+  subnet_id              = "xxxx"  # Replace with your subnet ID
   user_data       = "${file("install_jenkins.sh")}"
+
   tags = {
     Name = "Jenkins"
   }
